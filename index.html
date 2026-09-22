@@ -1,0 +1,2234 @@
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIDY MIND V3</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Thai",sans-serif;
+  background:#f3f0e8;
+  color:#292722;
+}
+
+button{
+  font:inherit;
+  border:0;
+  border-radius:14px;
+  padding:14px 20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.app{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+}
+
+.subtitle{
+  color:#777;
+  margin-top:4px;
+}
+
+.stats{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.stat{
+  background:#fff;
+  padding:9px 15px;
+  border-radius:14px;
+  text-align:center;
+  min-width:80px;
+  box-shadow:0 2px 8px #0001;
+}
+
+.stat small{
+  display:block;
+  color:#777;
+}
+
+.stat strong{
+  font-size:19px;
+}
+
+.card{
+  background:#fff;
+  border-radius:22px;
+  padding:25px;
+  margin-bottom:18px;
+  box-shadow:0 5px 20px #0000000d;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.hero{
+  text-align:center;
+  padding:60px 25px;
+}
+
+.hero-icon{
+  font-size:75px;
+}
+
+.hero h1{
+  font-size:44px;
+  margin:5px;
+}
+
+.hero p{
+  max-width:720px;
+  margin:15px auto 25px;
+  line-height:1.8;
+  color:#666;
+}
+
+.primary{
+  background:#292722;
+  color:white;
+}
+
+.secondary{
+  background:#eeeae2;
+  color:#292722;
+}
+
+.domains{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin:30px 0;
+}
+
+.domain{
+  background:#f6f3ed;
+  padding:17px 8px;
+  border-radius:15px;
+}
+
+.domain b{
+  display:block;
+  margin-top:6px;
+}
+
+.progress{
+  height:9px;
+  background:#eee;
+  border-radius:99px;
+  overflow:hidden;
+  margin:10px 0 20px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:#292722;
+  transition:.4s;
+}
+
+.level-line{
+  display:flex;
+  justify-content:space-between;
+  color:#777;
+}
+
+.instruction{
+  font-size:22px;
+  font-weight:900;
+  margin-bottom:20px;
+}
+
+.items{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.item{
+  background:#faf8f3;
+  border:2px solid #ddd8cf;
+  border-radius:17px;
+  padding:17px 8px;
+  text-align:center;
+  cursor:grab;
+  user-select:none;
+}
+
+.item:hover{
+  border-color:#777;
+  transform:translateY(-2px);
+}
+
+.item.correct{
+  background:#e7f1e5;
+  border-color:#477448;
+}
+
+.item.wrong{
+  background:#f7e4e4;
+  border-color:#9b3838;
+}
+
+.emoji{
+  display:block;
+  font-size:40px;
+  margin-bottom:7px;
+}
+
+.rooms{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.room{
+  min-height:180px;
+  background:#faf9f5;
+  border:3px dashed #ccc6bb;
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+}
+
+.room.over{
+  border-style:solid;
+}
+
+.room-items{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+}
+
+.mini{
+  background:#fff;
+  padding:7px 10px;
+  border-radius:10px;
+}
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.choice{
+  background:#f7f4ee;
+  color:#292722;
+  border:2px solid #ddd8cf;
+  text-align:left;
+}
+
+.choice:hover{
+  border-color:#292722;
+}
+
+.note{
+  background:#f5f2eb;
+  padding:18px;
+  border-radius:17px;
+  line-height:1.7;
+}
+
+.feedback{
+  min-height:30px;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+.big-score{
+  text-align:center;
+  font-size:64px;
+  font-weight:900;
+}
+
+.profile-row{
+  display:grid;
+  grid-template-columns:190px 1fr 60px;
+  gap:10px;
+  align-items:center;
+  margin:15px 0;
+}
+
+.bar{
+  height:15px;
+  background:#eee;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.bar span{
+  display:block;
+  height:100%;
+  width:0;
+  background:#292722;
+  transition:.7s;
+}
+
+.metric{
+  background:#f7f4ee;
+  padding:15px;
+  border-radius:15px;
+  margin-top:10px;
+}
+
+canvas{
+  width:100%;
+  max-width:900px;
+  display:block;
+  margin:25px auto;
+  background:#faf9f5;
+  border-radius:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+}
+
+@media(max-width:800px){
+
+  .domains{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .items{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .rooms{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:550px){
+
+  .app{
+    padding:10px;
+  }
+
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .domains{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .items{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .rooms{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .choice-grid{
+    grid-template-columns:1fr;
+  }
+
+  .profile-row{
+    grid-template-columns:110px 1fr 45px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+<div>
+  <div class="logo">🧺 TIDY MIND <small>V3</small></div>
+  <div class="subtitle">
+    Adaptive Functional Cognition Challenge
+  </div>
+</div>
+
+<div id="stats" class="stats hidden">
+
+  <div class="stat">
+    <small>Level</small>
+    <strong id="levelText">1/8</strong>
+  </div>
+
+  <div class="stat">
+    <small>Difficulty</small>
+    <strong id="difficultyText">Easy</strong>
+  </div>
+
+  <div class="stat">
+    <small>Score</small>
+    <strong id="scoreText">0</strong>
+  </div>
+
+  <div class="stat">
+    <small>Time</small>
+    <strong id="timeText">0s</strong>
+  </div>
+
+</div>
+
+</header>
+
+
+<!-- HOME -->
+
+<section id="home" class="card hero">
+
+<div class="hero-icon">🧺</div>
+
+<h1>TIDY MIND</h1>
+
+<h3>Adaptive Functional Cognition Challenge</h3>
+
+<p>
+เกมจำลองกิจวัตรประจำวันที่ให้ผู้เล่น
+จัดการสิ่งของ ความจำ ความสนใจ
+การเปลี่ยนกฎ การวางแผน
+และความจำเพื่อทำสิ่งที่ตั้งใจไว้
+</p>
+
+<div class="domains">
+
+<div class="domain">
+🧠
+<b>Memory</b>
+</div>
+
+<div class="domain">
+🎯
+<b>Attention</b>
+</div>
+
+<div class="domain">
+🔄
+<b>Flexibility</b>
+</div>
+
+<div class="domain">
+🗓️
+<b>Prospective</b>
+</div>
+
+<div class="domain">
+📋
+<b>Planning</b>
+</div>
+
+</div>
+
+<button class="primary" onclick="startGame()">
+เริ่มเกม
+</button>
+
+</section>
+
+
+<!-- GAME -->
+
+<section id="game" class="hidden">
+
+<div class="card">
+
+<div class="level-line">
+<span id="levelTitle">Level 1</span>
+<span id="timer">⏱ 0s</span>
+</div>
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
+</div>
+
+<div id="instruction" class="instruction"></div>
+
+<div id="gameArea"></div>
+
+<div id="feedback" class="feedback"></div>
+
+</div>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section id="results" class="card hidden">
+
+<h2>🧠 Cognitive Performance Profile</h2>
+
+<div id="finalScore" class="big-score">0</div>
+
+<p style="text-align:center">
+คะแนนรวม
+</p>
+
+<hr>
+
+<div id="profile"></div>
+
+<h3>📈 Performance Overview</h3>
+
+<canvas id="chart" width="800" height="320"></canvas>
+
+<h3>🔎 Error Analysis</h3>
+
+<div id="errors"></div>
+
+<h3>📋 Session Log</h3>
+
+<div style="overflow-x:auto">
+<table>
+
+<thead>
+<tr>
+<th>Level</th>
+<th>Difficulty</th>
+<th>Accuracy</th>
+<th>RT</th>
+<th>Error</th>
+</tr>
+</thead>
+
+<tbody id="sessionTable"></tbody>
+
+</table>
+</div>
+
+<br>
+
+<div class="note">
+
+<b>หมายเหตุ</b><br>
+
+ผลลัพธ์เป็น performance ภายในเกมเท่านั้น
+ไม่ใช่ neuropsychological assessment
+และไม่สามารถใช้วินิจฉัยภาวะทางคลินิกได้
+
+</div>
+
+<br>
+
+<button class="primary" onclick="downloadJSON()">
+💾 Export Session JSON
+</button>
+
+<button class="secondary" onclick="location.reload()">
+เล่นใหม่
+</button>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   GAME STATE
+========================================== */
+
+let level=0;
+let score=0;
+let difficulty=1;
+
+let gameStart=0;
+let timerInterval=null;
+
+let currentRT=0;
+
+let session=[];
+
+let errors={
+  omission:0,
+  commission:0,
+  perseveration:0
+};
+
+let cognitive={
+
+  memory:{correct:0,total:0},
+  attention:{correct:0,total:0},
+  flexibility:{correct:0,total:0},
+  prospective:{correct:0,total:0},
+  planning:{correct:0,total:0}
+
+};
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+const rooms=[
+
+ {
+  id:"bedroom",
+  name:"🛏️ ห้องนอน"
+ },
+
+ {
+  id:"kitchen",
+  name:"🍳 ห้องครัว"
+ },
+
+ {
+  id:"bathroom",
+  name:"🚿 ห้องน้ำ"
+ },
+
+ {
+  id:"entry",
+  name:"🚪 ทางเข้า"
+ }
+
+];
+
+
+const objects=[
+
+ {
+  id:"spoon",
+  emoji:"🥄",
+  name:"ช้อน",
+  room:"kitchen"
+ },
+
+ {
+  id:"glass",
+  emoji:"🥛",
+  name:"แก้ว",
+  room:"kitchen"
+ },
+
+ {
+  id:"plate",
+  emoji:"🍽️",
+  name:"จาน",
+  room:"kitchen"
+ },
+
+ {
+  id:"shirt",
+  emoji:"👕",
+  name:"เสื้อ",
+  room:"bedroom"
+ },
+
+ {
+  id:"book",
+  emoji:"📕",
+  name:"หนังสือ",
+  room:"bedroom"
+ },
+
+ {
+  id:"pillow",
+  emoji:"🛏️",
+  name:"หมอน",
+  room:"bedroom"
+ },
+
+ {
+  id:"toothpaste",
+  emoji:"🪥",
+  name:"ยาสีฟัน",
+  room:"bathroom"
+ },
+
+ {
+  id:"towel",
+  emoji:"🧻",
+  name:"ผ้าเช็ดตัว",
+  room:"bathroom"
+ },
+
+ {
+  id:"shampoo",
+  emoji:"🧴",
+  name:"แชมพู",
+  room:"bathroom"
+ },
+
+ {
+  id:"key",
+  emoji:"🔑",
+  name:"กุญแจ",
+  room:"entry"
+ },
+
+ {
+  id:"bag",
+  emoji:"👜",
+  name:"กระเป๋า",
+  room:"entry"
+ },
+
+ {
+  id:"umbrella",
+  emoji:"☂️",
+  name:"ร่ม",
+  room:"entry"
+ }
+
+];
+
+
+/* ==========================================
+   START
+========================================== */
+
+function startGame(){
+
+  document.getElementById("home")
+    .classList.add("hidden");
+
+  document.getElementById("game")
+    .classList.remove("hidden");
+
+  document.getElementById("stats")
+    .classList.remove("hidden");
+
+  level=0;
+  score=0;
+  difficulty=1;
+
+  gameStart=Date.now();
+
+  timerInterval=setInterval(updateTime,1000);
+
+  loadLevel();
+
+}
+
+
+function updateTime(){
+
+  const sec=Math.floor(
+    (Date.now()-gameStart)/1000
+  );
+
+  document.getElementById("timeText")
+    .textContent=sec+"s";
+
+  document.getElementById("timer")
+    .textContent="⏱ "+sec+"s";
+
+}
+
+
+/* ==========================================
+   ADAPTIVE DIFFICULTY
+========================================== */
+
+function adjustDifficulty(){
+
+  const last=session[session.length-1];
+
+  if(!last)return;
+
+  if(last.accuracy>=0.8 && last.rt<6000){
+
+    difficulty=Math.min(3,difficulty+1);
+
+  }
+
+  if(last.accuracy<0.5){
+
+    difficulty=Math.max(1,difficulty-1);
+
+  }
+
+  const names=[
+    "Easy",
+    "Medium",
+    "Hard"
+  ];
+
+  document.getElementById("difficultyText")
+    .textContent=names[difficulty-1];
+
+}
+
+
+/* ==========================================
+   LOAD LEVEL
+========================================== */
+
+function loadLevel(){
+
+  updateHeader();
+
+  gameStart=Date.now();
+
+  document.getElementById("feedback")
+    .textContent="";
+
+  document.getElementById("levelTitle")
+    .textContent="Level "+(level+1);
+
+  if(level===0)levelSorting();
+  if(level===1)levelMemory();
+  if(level===2)levelProspective();
+  if(level===3)levelSwitching();
+  if(level===4)levelPlanning();
+  if(level===5)levelAttention();
+  if(level===6)levelErrorDetection();
+  if(level===7)levelFinalChallenge();
+
+}
+
+
+function updateHeader(){
+
+  document.getElementById("levelText")
+    .textContent=(level+1)+"/8";
+
+  document.getElementById("scoreText")
+    .textContent=score;
+
+  document.getElementById("progressBar")
+    .style.width=((level/8)*100)+"%";
+
+}
+
+
+/* ==========================================
+   LEVEL 1
+   CATEGORIZATION
+========================================== */
+
+function levelSorting(){
+
+  document.getElementById("instruction")
+    .textContent=
+    "ลากสิ่งของจากตะกร้าไปยังห้องที่เหมาะสม";
+
+  let count=difficulty===1?8:
+            difficulty===2?10:12;
+
+  let arr=[...objects]
+    .sort(()=>Math.random()-0.5)
+    .slice(0,count);
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="note">
+  ให้จัดของทุกชิ้นเข้าห้องที่เหมาะสม
+  โดยไม่จำเป็นต้องรีบ
+  </div>
+
+  <br>
+
+  <div class="items" id="items">
+
+  ${arr.map(o=>`
+
+  <div
+    class="item"
+    draggable="true"
+    data-id="${o.id}"
+  >
+
+    <span class="emoji">
+      ${o.emoji}
+    </span>
+
+    ${o.name}
+
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  <br>
+
+  <div class="rooms">
+
+  ${rooms.map(r=>`
+
+  <div
+    class="room"
+    data-room="${r.id}"
+  >
+
+    <h3>${r.name}</h3>
+
+    <div class="room-items"></div>
+
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  `;
+
+  activateDrag();
+
+}
+
+
+function activateDrag(){
+
+  document.querySelectorAll(".item")
+    .forEach(item=>{
+
+      item.addEventListener(
+        "dragstart",
+        ()=>item.classList.add("dragging")
+      );
+
+      item.addEventListener(
+        "dragend",
+        ()=>item.classList.remove("dragging")
+      );
+
+    });
+
+
+  document.querySelectorAll(".room")
+    .forEach(room=>{
+
+      room.addEventListener(
+        "dragover",
+        e=>{
+          e.preventDefault();
+          room.classList.add("over");
+        }
+      );
+
+      room.addEventListener(
+        "dragleave",
+        ()=>room.classList.remove("over")
+      );
+
+      room.addEventListener(
+        "drop",
+        ()=>{
+
+          room.classList.remove("over");
+
+          const item=
+            document.querySelector(".dragging");
+
+          if(!item)return;
+
+          const obj=
+            objects.find(
+              o=>o.id===item.dataset.id
+            );
+
+          cognitive.attention.total++;
+
+          if(obj.room===room.dataset.room){
+
+            cognitive.attention.correct++;
+
+            score+=10;
+
+            item.classList.add("correct");
+
+          }else{
+
+            errors.commission++;
+
+            item.classList.add("wrong");
+
+          }
+
+          room
+            .querySelector(".room-items")
+            .appendChild(item);
+
+          item.draggable=false;
+
+          const placed=
+            document.querySelectorAll(".room .item")
+              .length;
+
+          const total=
+            document.querySelectorAll(".item")
+              .length;
+
+          if(placed===total){
+
+            finishLevel(
+              cognitive.attention.correct /
+              cognitive.attention.total
+            );
+
+          }
+
+        }
+
+      );
+
+    });
+
+}
+
+
+/* ==========================================
+   LEVEL 2
+   WORKING MEMORY
+========================================== */
+
+let memoryTarget=null;
+
+
+function levelMemory(){
+
+  document.getElementById("instruction")
+    .textContent=
+    "จำตำแหน่งของสิ่งของ";
+
+  const n=difficulty===1?6:
+          difficulty===2?8:10;
+
+  memoryTarget=[...objects]
+    .sort(()=>Math.random()-0.5)
+    .slice(0,n);
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="items">
+
+  ${memoryTarget.map(o=>`
+
+  <div class="item">
+
+    <span class="emoji">
+      ${o.emoji}
+    </span>
+
+    <small>
+      ${rooms.find(r=>r.id===o.room).name}
+    </small>
+
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  <br>
+
+  <button class="primary"
+    onclick="hideMemory()">
+
+    ซ่อนข้อมูล
+
+  </button>
+
+  `;
+
+}
+
+
+function hideMemory(){
+
+  document.getElementById("instruction")
+    .textContent=
+    "กุญแจอยู่ห้องไหน?";
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="choice-grid">
+
+  ${rooms.map(r=>`
+
+  <button
+    class="choice"
+    onclick="memoryAnswer('${r.id}')"
+  >
+
+  ${r.name}
+
+  </button>
+
+  `).join("")}
+
+  </div>
+
+  `;
+
+}
+
+
+function memoryAnswer(room){
+
+  const key=
+    memoryTarget.find(
+      o=>o.id==="key"
+    );
+
+  cognitive.memory.total++;
+
+  let correct=
+    key && room===key.room;
+
+  if(correct){
+
+    cognitive.memory.correct++;
+    score+=25;
+
+  }else{
+
+    errors.omission++;
+
+  }
+
+  finishLevel(correct?1:0);
+
+}
+
+
+/* ==========================================
+   LEVEL 3
+   PROSPECTIVE MEMORY
+========================================== */
+
+let prospectiveDone=false;
+
+
+function levelProspective(){
+
+  prospectiveDone=false;
+
+  document.getElementById("instruction")
+    .textContent=
+    "จำภารกิจพิเศษก่อนเริ่ม";
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="note">
+
+  <h3>🗓️ Future Intention</h3>
+
+  <p style="font-size:21px">
+
+  เมื่อพบ
+  <b>☂️ ร่ม</b>
+
+  ให้ย้ายร่มไปยัง
+  <b>🚪 ทางเข้า</b>
+
+  </p>
+
+  <p>
+  เกมจะไม่เตือนซ้ำ
+  </p>
+
+  <button class="primary"
+    onclick="startProspective()">
+
+    จำแล้ว — เริ่ม
+
+  </button>
+
+  </div>
+
+  `;
+
+}
+
+
+function startProspective(){
+
+  document.getElementById("instruction")
+    .textContent=
+    "จัดการสิ่งของตามสถานการณ์";
+
+  const arr=[
+    objects.find(o=>o.id==="book"),
+    objects.find(o=>o.id==="spoon"),
+    objects.find(o=>o.id==="shirt"),
+    objects.find(o=>o.id==="umbrella"),
+    objects.find(o=>o.id==="glass"),
+    objects.find(o=>o.id==="towel")
+  ];
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="items">
+
+  ${arr.map(o=>`
+
+  <div
+    class="item"
+    onclick="prospectiveClick('${o.id}',this)"
+  >
+
+    <span class="emoji">
+      ${o.emoji}
+    </span>
+
+    ${o.name}
+
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  `;
+
+}
+
+
+function prospectiveClick(id,el){
+
+  if(id==="umbrella" && !prospectiveDone){
+
+    prospectiveDone=true;
+
+    cognitive.prospective.total++;
+    cognitive.prospective.correct++;
+
+    score+=30;
+
+    el.classList.add("correct");
+
+    document.getElementById("feedback")
+      .textContent=
+      "✓ จำ intention ได้ถูกต้อง";
+
+    setTimeout(
+      ()=>finishLevel(1),
+      700
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   LEVEL 4
+   COGNITIVE FLEXIBILITY
+========================================== */
+
+let switchStage=0;
+
+
+function levelSwitching(){
+
+  switchStage=0;
+
+  document.getElementById("instruction")
+    .textContent=
+    "กฎเปลี่ยนกลางเกม — อ่านให้ละเอียด";
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="note">
+
+  <b>กฎรอบที่ 1</b>
+
+  <p>
+  เลือกของที่อยู่ในห้องครัว
+  </p>
+
+  </div>
+
+  <br>
+
+  <div class="choice-grid">
+
+  <button class="choice"
+    onclick="switchOne('kitchen')">
+
+    🥄 ช้อน
+
+  </button>
+
+  <button class="choice"
+    onclick="switchOne('bedroom')">
+
+    👕 เสื้อ
+
+  </button>
+
+  <button class="choice"
+    onclick="switchOne('bathroom')">
+
+    🪥 ยาสีฟัน
+
+  </button>
+
+  <button class="choice"
+    onclick="switchOne('entry')">
+
+    🔑 กุญแจ
+
+  </button>
+
+  </div>
+
+  `;
+
+}
+
+
+function switchOne(room){
+
+  cognitive.flexibility.total++;
+
+  if(room==="kitchen"){
+
+    score+=15;
+
+    document.getElementById("feedback")
+      .textContent=
+      "ถูกต้อง ✓";
+
+    setTimeout(()=>{
+
+      document.getElementById("instruction")
+        .textContent=
+        "กฎเปลี่ยนแล้ว: เลือกของที่ใช้ก่อนออกจากบ้าน";
+
+      document.getElementById("gameArea").innerHTML=`
+
+      <div class="choice-grid">
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+
+        🥄 ช้อน
+
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+
+        📕 หนังสือ
+
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(true)">
+
+        🔑 กุญแจ
+
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+
+        🧻 ผ้าเช็ดตัว
+
+      </button>
+
+      </div>
+
+      `;
+
+    },500);
+
+  }else{
+
+    errors.perseveration++;
+
+    switchStage=1;
+
+    setTimeout(()=>{
+
+      document.getElementById("instruction")
+        .textContent=
+        "กฎเปลี่ยนแล้ว: เลือกของที่ใช้ก่อนออกจากบ้าน";
+
+      document.getElementById("gameArea").innerHTML=`
+
+      <div class="choice-grid">
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+        🥄 ช้อน
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+        📕 หนังสือ
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(true)">
+        🔑 กุญแจ
+      </button>
+
+      <button class="choice"
+        onclick="switchTwo(false)">
+        🧻 ผ้าเช็ดตัว
+      </button>
+
+      </div>
+
+      `;
+
+    },500);
+
+  }
+
+}
+
+
+function switchTwo(correct){
+
+  cognitive.flexibility.total++;
+
+  if(correct){
+
+    cognitive.flexibility.correct++;
+
+    score+=25;
+
+  }else{
+
+    errors.perseveration++;
+
+  }
+
+  finishLevel(
+    cognitive.flexibility.correct /
+    cognitive.flexibility.total
+  );
+
+}
+
+
+/* ==========================================
+   LEVEL 5
+   PLANNING
+========================================== */
+
+let plan=[];
+let planExpected=[
+  "dress",
+  "medicine",
+  "key",
+  "lock"
+];
+
+
+function levelPlanning(){
+
+  plan=[];
+
+  document.getElementById("instruction")
+    .textContent=
+    "วางแผนการออกจากบ้านให้เป็นลำดับ";
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="note">
+
+  <p>
+  คุณกำลังจะออกไปโรงพยาบาล
+  </p>
+
+  <p>
+  เลือกลำดับกิจกรรมที่เหมาะสม
+  </p>
+
+  <ol id="planList"></ol>
+
+  </div>
+
+  <br>
+
+  <div class="choice-grid">
+
+  <button class="choice"
+    onclick="planChoice('dress')">
+
+    👕 แต่งตัว
+
+  </button>
+
+  <button class="choice"
+    onclick="planChoice('medicine')">
+
+    💊 เตรียมยา
+
+  </button>
+
+  <button class="choice"
+    onclick="planChoice('key')">
+
+    🔑 หยิบกุญแจ
+
+  </button>
+
+  <button class="choice"
+    onclick="planChoice('lock')">
+
+    🔒 ล็อกประตู
+
+  </button>
+
+  </div>
+
+  `;
+
+}
+
+
+function planChoice(id){
+
+  cognitive.planning.total++;
+
+  if(id===planExpected[plan.length]){
+
+    plan.push(id);
+
+    cognitive.planning.correct++;
+
+    score+=10;
+
+    const names={
+      dress:"👕 แต่งตัว",
+      medicine:"💊 เตรียมยา",
+      key:"🔑 หยิบกุญแจ",
+      lock:"🔒 ล็อกประตู"
+    };
+
+    const li=document.createElement("li");
+
+    li.textContent=names[id];
+
+    document.getElementById("planList")
+      .appendChild(li);
+
+    if(plan.length===4){
+
+      finishLevel(1);
+
+    }
+
+  }else{
+
+    errors.commission++;
+
+    document.getElementById("feedback")
+      .textContent=
+      "⚠ ลำดับนี้ยังไม่เหมาะสม ลองพิจารณาใหม่";
+
+  }
+
+}
+
+
+/* ==========================================
+   LEVEL 6
+   SUSTAINED ATTENTION
+========================================== */
+
+let attentionCount=0;
+
+
+function levelAttention(){
+
+  attentionCount=0;
+
+  document.getElementById("instruction")
+    .textContent=
+    "กดเฉพาะสิ่งของที่เป็นของใช้ในครัว";
+
+  const n=difficulty===1?10:
+          difficulty===2?14:18;
+
+  const choices=[...objects]
+    .sort(()=>Math.random()-0.5)
+    .slice(0,Math.min(n,objects.length));
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="items">
+
+  ${choices.map(o=>`
+
+  <div
+    class="item"
+    onclick="attentionClick('${o.id}',this)"
+  >
+
+    <span class="emoji">
+      ${o.emoji}
+    </span>
+
+    ${o.name}
+
+  </div>
+
+  `).join("")}
+
+  </div>
+
+  `;
+
+}
+
+
+function attentionClick(id,el){
+
+  if(el.dataset.clicked)return;
+
+  el.dataset.clicked="1";
+
+  const obj=
+    objects.find(o=>o.id===id);
+
+  cognitive.attention.total++;
+
+  if(obj.room==="kitchen"){
+
+    cognitive.attention.correct++;
+
+    score+=8;
+
+    el.classList.add("correct");
+
+  }else{
+
+    errors.commission++;
+
+    el.classList.add("wrong");
+
+  }
+
+  attentionCount++;
+
+  const total=
+    document.querySelectorAll(".item").length;
+
+  if(attentionCount===total){
+
+    finishLevel(
+      cognitive.attention.correct /
+      cognitive.attention.total
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   LEVEL 7
+   ERROR DETECTION
+========================================== */
+
+function levelErrorDetection(){
+
+  document.getElementById("instruction")
+    .textContent=
+    "ค้นหาของที่อยู่ผิดตำแหน่ง";
+
+  const errorsHere=[
+
+    ["🪥","ยาสีฟัน","🍳 ห้องครัว",true],
+
+    ["🥄","ช้อน","🍳 ห้องครัว",false],
+
+    ["👕","เสื้อ","🛏️ ห้องนอน",false],
+
+    ["🔑","กุญแจ","🚿 ห้องน้ำ",true],
+
+    ["📕","หนังสือ","🛏️ ห้องนอน",false],
+
+    ["☂️","ร่ม","🚪 ทางเข้า",false]
+
+  ];
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="items">
+
+  ${errorsHere.map((x,i)=>`
+
+  <button
+    class="choice"
+    onclick="errorChoice(${i},${x[3]})"
+  >
+
+    <span class="emoji">${x[0]}</span>
+
+    ${x[1]}
+
+    <br>
+
+    <small>
+      อยู่ที่ ${x[2]}
+    </small>
+
+  </button>
+
+  `).join("")}
+
+  </div>
+
+  `;
+
+}
+
+
+function errorChoice(index,isError){
+
+  if(isError){
+
+    score+=25;
+
+    cognitive.attention.correct++;
+
+    document.getElementById("feedback")
+      .textContent=
+      "✓ ตรวจพบ contextual error";
+
+  }else{
+
+    errors.commission++;
+
+    document.getElementById("feedback")
+      .textContent=
+      "ไม่พบข้อผิดพลาดตรงนี้";
+
+  }
+
+  cognitive.attention.total++;
+
+  setTimeout(
+    ()=>finishLevel(isError?1:0),
+    700
+  );
+
+}
+
+
+/* ==========================================
+   LEVEL 8
+   FINAL EXECUTIVE CHALLENGE
+========================================== */
+
+let finalSelected=[];
+
+
+function levelFinalChallenge(){
+
+  finalSelected=[];
+
+  document.getElementById("instruction")
+    .textContent=
+    "FINAL CHALLENGE — เตรียมตัวออกจากบ้าน";
+
+  document.getElementById("gameArea").innerHTML=`
+
+  <div class="note">
+
+  <p>
+  คุณกำลังจะไปโรงพยาบาล
+  </p>
+
+  <p>
+  ฝนกำลังตก และเหลือเวลาเพียง
+  <b>7 นาที</b>
+  </p>
+
+  <p>
+  เลือกสิ่งที่จำเป็นสำหรับภารกิจ
+  </p>
+
+  </div>
+
+  <br>
+
+  <div class="items">
+
+  <div class="item"
+    onclick="finalChoice(this,true)">
+    <span class="emoji">💊</span>
+    ยา
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,true)">
+    <span class="emoji">☂️</span>
+    ร่ม
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,true)">
+    <span class="emoji">🔑</span>
+    กุญแจ
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,true)">
+    <span class="emoji">👜</span>
+    กระเป๋า
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,false)">
+    <span class="emoji">🛏️</span>
+    หมอน
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,false)">
+    <span class="emoji">🍽️</span>
+    จาน
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,false)">
+    <span class="emoji">📕</span>
+    หนังสือ
+  </div>
+
+  <div class="item"
+    onclick="finalChoice(this,false)">
+    <span class="emoji">🧻</span>
+    ผ้าเช็ดตัว
+  </div>
+
+  </div>
+
+  <br>
+
+  <button class="primary"
+    onclick="submitFinal()">
+
+    ยืนยันรายการ
+
+  </button>
+
+  `;
+
+}
+
+
+function finalChoice(el,correct){
+
+  if(el.dataset.selected)return;
+
+  el.dataset.selected="1";
+
+  el.classList.add("selected");
+
+  finalSelected.push({
+    correct:correct,
+    element:el
+  });
+
+}
+
+
+function submitFinal(){
+
+  let correct=0;
+
+  finalSelected.forEach(x=>{
+
+    if(x.correct){
+
+      correct++;
+
+      x.element.classList.add("correct");
+
+    }else{
+
+      errors.commission++;
+
+      x.element.classList.add("wrong");
+
+    }
+
+  });
+
+  cognitive.planning.total+=4;
+
+  cognitive.planning.correct+=correct;
+
+  score+=correct*10;
+
+  setTimeout(
+    ()=>finishLevel(correct/4),
+    900
+  );
+
+}
+
+
+/* ==========================================
+   LEVEL FINISH
+========================================== */
+
+function finishLevel(accuracy){
+
+  currentRT=
+    Date.now()-gameStart;
+
+  session.push({
+
+    level:level+1,
+
+    difficulty:difficulty,
+
+    accuracy:Number(
+      Math.max(0,Math.min(1,accuracy))
+        .toFixed(2)
+    ),
+
+    rt:currentRT,
+
+    timestamp:new Date().toISOString()
+
+  });
+
+  adjustDifficulty();
+
+  if(level>=7){
+
+    finishGame();
+
+  }else{
+
+    level++;
+
+    setTimeout(
+      loadLevel,
+      400
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   RESULTS
+========================================== */
+
+function finishGame(){
+
+  clearInterval(timerInterval);
+
+  document.getElementById("game")
+    .classList.add("hidden");
+
+  document.getElementById("stats")
+    .classList.add("hidden");
+
+  document.getElementById("results")
+    .classList.remove("hidden");
+
+  document.getElementById("finalScore")
+    .textContent=score;
+
+  renderProfile();
+
+  drawChart();
+
+  renderErrors();
+
+  renderSession();
+
+}
+
+
+/* ==========================================
+   PROFILE
+========================================== */
+
+function renderProfile(){
+
+  const names={
+
+    memory:"Working Memory",
+
+    attention:"Attention",
+
+    flexibility:"Cognitive Flexibility",
+
+    prospective:"Prospective Memory",
+
+    planning:"Planning"
+
+  };
+
+  let html="";
+
+  Object.keys(cognitive).forEach(key=>{
+
+    const x=cognitive[key];
+
+    const pct=x.total
+      ?Math.round(x.correct/x.total*100)
+      :0;
+
+    html+=`
+
+    <div class="profile-row">
+
+      <b>${names[key]}</b>
+
+      <div class="bar">
+
+        <span style="width:${pct}%"></span>
+
+      </div>
+
+      <span>${pct}%</span>
+
+    </div>
+
+    `;
+
+  });
+
+  document.getElementById("profile")
+    .innerHTML=html;
+
+}
+
+
+/* ==========================================
+   ERROR ANALYSIS
+========================================== */
+
+function renderErrors(){
+
+  document.getElementById("errors").innerHTML=`
+
+  <div class="metric">
+  ❌ Omission errors:
+  <b>${errors.omission}</b>
+  </div>
+
+  <div class="metric">
+  ⚠️ Commission errors:
+  <b>${errors.commission}</b>
+  </div>
+
+  <div class="metric">
+  🔁 Perseverative errors:
+  <b>${errors.perseveration}</b>
+  </div>
+
+  `;
+
+}
+
+
+/* ==========================================
+   SESSION TABLE
+========================================== */
+
+function renderSession(){
+
+  document.getElementById("sessionTable")
+    .innerHTML=session.map(s=>`
+
+    <tr>
+
+      <td>${s.level}</td>
+
+      <td>
+        <span class="badge">
+        ${["Easy","Medium","Hard"][s.difficulty-1]}
+        </span>
+      </td>
+
+      <td>
+        ${Math.round(s.accuracy*100)}%
+      </td>
+
+      <td>
+        ${(s.rt/1000).toFixed(2)}s
+      </td>
+
+      <td>
+        ${s.accuracy<0.5?"Performance ต่ำ":"—"}
+      </td>
+
+    </tr>
+
+    `).join("");
+
+}
+
+
+/* ==========================================
+   SIMPLE PERFORMANCE GRAPH
+========================================== */
+
+function drawChart(){
+
+  const canvas=
+    document.getElementById("chart");
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.clearRect(
+    0,0,
+    canvas.width,
+    canvas.height
+  );
+
+  const data=session.map(
+    s=>s.accuracy*100
+  );
+
+  const w=canvas.width;
+  const h=canvas.height;
+
+  const left=55;
+  const bottom=45;
+
+  ctx.strokeStyle="#aaa";
+
+  ctx.beginPath();
+
+  ctx.moveTo(left,20);
+  ctx.lineTo(left,h-bottom);
+  ctx.lineTo(w-20,h-bottom);
+
+  ctx.stroke();
+
+  ctx.fillStyle="#292722";
+
+  data.forEach((value,i)=>{
+
+    const x=
+      left+
+      (i/(Math.max(data.length-1,1)))
+      *(w-left-40);
+
+    const y=
+      h-bottom-
+      (value/100)*(h-bottom-30);
+
+    ctx.beginPath();
+
+    ctx.arc(x,y,5,0,Math.PI*2);
+
+    ctx.fill();
+
+    ctx.fillText(
+      Math.round(value)+"%",
+      x-14,
+      y-12
+    );
+
+  });
+
+  ctx.fillText(
+    "Level",
+    w/2,
+    h-10
+  );
+
+  ctx.fillText(
+    "Accuracy",
+    8,
+    25
+  );
+
+}
+
+
+/* ==========================================
+   EXPORT
+========================================== */
+
+function downloadJSON(){
+
+  const data={
+
+    game:"TIDY MIND",
+
+    version:"3.0",
+
+    date:new Date().toISOString(),
+
+    totalScore:score,
+
+    difficulty:difficulty,
+
+    cognitive:cognitive,
+
+    errors:errors,
+
+    session:session
+
+  };
+
+  const blob=new Blob(
+
+    [JSON.stringify(data,null,2)],
+
+    {type:"application/json"}
+
+  );
+
+  const url=
+    URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+
+  a.download=
+    "tidy-mind-session.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
+```
